@@ -10,8 +10,8 @@ vector<ll> v[MAXN];
 ll bsize,maxh;
 bool visited[MAXN];
 ll dfs(ll root, ll parent){
-    maxh = max(lev[root],maxh);
-    cout<<root<<" "<<lev[root]<<endl;
+    maxh = max(lev[root]+1,maxh);
+    //cout<<root<<" "<<lev[root]<<endl;
     for(ll i=0;i<v[root].size();i++){
         if(v[root][i]!=parent){
             lev[v[root][i]] = lev[root]+1;
