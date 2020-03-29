@@ -19,6 +19,7 @@ ll dfs(ll root, ll parent){
             dfs(v[root][i],root);
         }
     }
+    return 0;
 }
 void traverse(ll node){
     if(lev[node]<bsize)
