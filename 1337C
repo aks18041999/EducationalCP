@@ -1,0 +1,70 @@
+////PROBLEM - https://codeforces.com/contest/1337/problem/C
+.....BEST OPTIMAL ACCORDING TO SUBSET SIZE - HIEGHT
+
+#include <bits/stdc++.h>
+using namespace std;
+#define  ll long long int
+#define inf std::numeric_limits<double>::infinity()
+#define DECI(n) fixed<<showpoint<<setprecision(n)
+#define MOD 1000000007LL
+#define FOR(i,start,end) for(int i=start;i<end;i++)
+#define FORR(i,end,start) for(int i=end-1;i>=start;i--)
+#define INPUT(arr,n) FOR(i,0,n)cin>>arr[i];
+#define INPUT2d(arr,n,k) FOR(i,0,n)FOR(j,0,k)cin>>arr[i][j];
+#define MAX(a,b) ((a)>(b)?(a):(b))
+#define MIN(a,b) ((a)<(b)?(a):(b))
+#define pb(n) push_back(n)
+#define fi first
+#define si second
+const ll SIZE = 200005;
+vector<ll> v[SIZE];
+bool visited[SIZE];
+pair<ll,ll> p[SIZE];
+set<ll> s;
+ll ans;
+ll dfs(ll root,ll x){
+
+    if(visited[root])return 0;
+    visited[root]=1;
+    //cout<<root<<"\n";
+    ll cnt = 1;
+    for(auto i:v[root]){
+        if(!visited[i]){
+            cnt+=dfs(i,x+1);
+        }
+    }
+    p[root] = {cnt-x,root};
+    return cnt;
+}
+ll calc(ll root,ll x){
+
+    if(visited[root])return 0;
+    visited[root]=1;
+    if(s.find(root)==s.end())
+        x++;
+    else ans+=x;
+    for(auto i:v[root]){
+        if(!visited[i]){
+            calc(i,x);
+        }
+    }
+    return 0;
+}
+main(){
+    ll n,k;
+    cin>>n>>k;
+    for(ll i=0;i<n-1;i++){
+        ll x,y;
+        cin>>x>>y;
+        v[x].pb(y);
+        v[y].pb(x);
+    }
+    dfs(1,1);
+    sort(p+1,p+n+1);
+    for(ll i=1;i<=k;i++){
+        s.insert(p[i].si);
+    }
+    memset(visited,0,sizeof(visited));
+    calc(1,0);
+    cout<<ans<<"\n";
+}
